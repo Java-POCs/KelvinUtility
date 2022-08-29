@@ -194,11 +194,16 @@ public class XlsReaderUtils {
 						String txVal = txCell.getStringCellValue();
 						if (!(txVal == null || txVal.trim().equals(""))) {
 							txVal = txVal.trim();
-							if (txVal.charAt(txVal.length() - 1) == 'T' || txVal.charAt(txVal.length() - 1) == 't') {
-								txVal = txVal.substring(0, txVal.length() - 1);
-								txVal = txVal.replaceAll("\\s+", "");
-							} else
-								break dataLoop;
+							if (txVal.contains(" ") || txVal.contains("	")) {
+								if (txVal.charAt(txVal.length() - 1) == 'T'
+										|| txVal.charAt(txVal.length() - 1) == 't') {
+									txVal = txVal.substring(0, txVal.length() - 1);
+									txVal = txVal.replaceAll("\\s+", "");
+								} else {
+									break dataLoop;
+								}
+							}
+
 						} else
 							break dataLoop;
 						if (dataMap.containsKey(txVal))
